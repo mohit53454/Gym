@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Record Attendance{% endblock %}
+{% block heading %}Record Attendance{% endblock %}
+{% block description %}Check a member in and record the session time.{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">Manual check-in</div>
+  <p class="poster-sub">Used when you want to force a quick session record from the admin side.</p>
+</section>
+  <div class="panel">
+    <form method="POST">
+      <label>Member<input type="text" value="{{ member['name'] }}" disabled></label>
+      <label>Date<input type="date" name="attendance_date" value="{{ today }}" required></label>
+      <label>Check-in Time<input type="time" name="check_in_time" required></label>
+      <label>Check-out Time<input type="time" name="check_out_time"></label>
+      <div class="form-actions"><button class="button" type="submit">Save Attendance</button><a class="button-ghost" href="/attendance">Cancel</a></div>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Customer Scanner{% endblock %}
+{% block heading %}Attendance Scanner{% endblock %}
+{% block description %}A sharp, high-contrast check-in gate for customer-side scanning and manual code entry.{% endblock %}
+{% block extra_head %}
+<script src="https://unpkg.com/html5-qrcode" defer></script>
+{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.24), rgba(10,10,10,0.98) 44%, rgba(0,0,0,0.98));">
+  <div class="poster-headline">Scan. Enter. Train.</div>
+  <p class="poster-sub">This is designed like a gym checkpoint poster, not a soft app dashboard. Dark orange glow, hard edges, and a strong presence.</p>
+</section>
+<div class="grid-2">
+  <section class="panel scanner-box">
+    <h3>Scan Member QR</h3>
+    <p class="note">Allow camera access, then scan the member QR shown on their profile.</p>
+    <div id="reader" style="border:1px solid rgba(255,106,0,0.22); box-shadow:0 0 34px rgba(255,106,0,0.14);"></div>
+  </section>
+  <section class="panel">
+    <h3>Manual Check-in</h3>
+    <form method="POST" action="/customer/scan">
+      <label>Member Code<input id="member_code" type="text" name="member_code" placeholder="PGM0001" required></label>
+      <div class="form-actions"><button class="button" type="submit">Mark Attendance</button></div>
+    </form>
+    <div class="section card" style="background:linear-gradient(180deg, rgba(255,106,0,0.10), rgba(10,10,10,0.96));">
+      <strong>Today Check-ins</strong>
+      <div class="stat-number" style="color:#ff8f1f;text-shadow:0 0 16px rgba(255,106,0,0.25);">{{ today_count }}</div>
+      <div class="mini">Date: {{ today }}</div>
+    </div>
+  </section>
+</div>
+<div class="section panel table-wrap">
+  <h3>Recent Scans</h3>
+  {% if recent_scans %}
+  <table>
+    <thead><tr><th>Date</th><th>Member</th><th>Code</th><th>Check-in</th></tr></thead>
+    <tbody>
+      {% for scan in recent_scans %}
+      <tr>
+        <td>{{ scan['attendance_date'] }}</td>
+        <td>{{ scan['name'] }}</td>
+        <td>{{ scan['member_code'] }}</td>
+        <td>{{ scan['check_in_time'] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="note">No recent scans yet.</p>
+  {% endif %}
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  window.addEventListener('load', function () {
+    const input = document.getElementById('member_code');
+    if (!window.Html5QrcodeScanner) return;
+    const scanner = new Html5QrcodeScanner('reader', { fps: 10, qrbox: 220 }, false);
+    scanner.render(function (decodedText) {
+      input.value = decodedText;
+      input.form.requestSubmit();
+    }, function () {});
+  });
+</script>
+{% endblock %}

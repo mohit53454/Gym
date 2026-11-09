@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Members</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f7fb; }
+    .page-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .page-header h1 { margin: 0; }
+    .button { padding: 10px 14px; background: #007bff; color: white; text-decoration: none; border-radius: 8px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 12px; overflow: hidden; }
+    th, td { padding: 14px; border-bottom: 1px solid #dde4eb; }
+    th { background: #28a745; color: white; text-align: left; }
+    tr:last-child td { border-bottom: none; }
+  </style>
+</head>
+<body>
+  <div class="page-header">
+    <h1>Active Members</h1>
+    <div>
+      <a class="button" href="/new_member">Register New Member</a>
+      <a class="button" href="/">Dashboard</a>
+    </div>
+  </div>
+
+  {% if members %}
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Plan</th>
+        <th>Start Date</th>
+        <th>Expiry Date</th>
+        <th>Trainer</th>
+        <th>Fee</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for member in members %}
+      <tr>
+        <td>{{ member['name'] }}</td>
+        <td>{{ member['phone'] }}</td>
+        <td>{{ member['plan_name'] }}</td>
+        <td>{{ member['start_date'] }}</td>
+        <td>{{ member['expiry_date'] }}</td>
+        <td>{{ member['trainer_id'] or '-' }}</td>
+        <td>{{ member['fee_status'] }}</td>
+        <td>
+          <a href="/member/{{ member['id'] }}">View</a>
+          <a href="/record_attendance/{{ member['id'] }}">Attendance</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+    <p>No active members yet.</p>
+  {% endif %}
+</body>
+</html>

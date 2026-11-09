@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Add Trainer{% endblock %}
+{% block heading %}Add Trainer{% endblock %}
+{% block description %}Add a trainer to your gym roster.{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">Coach lineup</div>
+  <p class="poster-sub">Trainers should feel like part of the brand wall, not a simple form entry.</p>
+</section>
+  <div class="panel">
+    <form method="POST">
+      <label>Name<input type="text" name="name" required></label>
+      <label>Phone<input type="tel" name="phone" required></label>
+      <label>Specialty<input type="text" name="specialty" value="General"></label>
+      <div class="form-actions"><button class="button" type="submit">Save Trainer</button><a class="button-ghost" href="/trainers">Cancel</a></div>
+    </form>
+  </div>
+{% endblock %}

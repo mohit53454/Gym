@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Payments{% endblock %}
+{% block heading %}Payments Overview{% endblock %}
+{% block description %}Track revenue totals and record new payments for members.{% endblock %}
+{% block actions %}<a class="button" href="/payments">Refresh</a>{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">Revenue and force</div>
+  <p class="poster-sub">A premium cashflow view built with orange glow, dark surfaces, and hard contrast.</p>
+</section>
+<div class="stats-grid">
+  <div class="card"><strong>Today</strong><div class="stat-number" style="color:#ff8f1f;text-shadow:0 0 16px rgba(255,106,0,0.25);">Rs {{ today_revenue }}</div></div>
+  <div class="card"><strong>This Week</strong><div class="stat-number" style="color:#ff8f1f;text-shadow:0 0 16px rgba(255,106,0,0.25);">Rs {{ week_revenue }}</div></div>
+  <div class="card"><strong>This Month</strong><div class="stat-number" style="color:#ff8f1f;text-shadow:0 0 16px rgba(255,106,0,0.25);">Rs {{ month_revenue }}</div></div>
+  <div class="card"><strong>Total</strong><div class="stat-number" style="color:#ff8f1f;text-shadow:0 0 16px rgba(255,106,0,0.25);">Rs {{ total_revenue }}</div></div>
+</div>
+<div class="section panel table-wrap">
+  {% if payments %}
+    <table>
+      <thead><tr><th>Date</th><th>Member</th><th>Amount</th><th>Type</th><th>Action</th></tr></thead>
+      <tbody>
+        {% for payment in payments %}
+        <tr>
+          <td>{{ payment['payment_date'] }}</td>
+          <td>{{ payment['name'] }}</td>
+          <td>Rs {{ payment['amount'] }}</td>
+          <td>{{ payment['payment_type'] }}</td>
+          <td><a class="button-small" href="/record_payment/{{ payment['member_id'] }}">New Payment</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="note">No payments recorded yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

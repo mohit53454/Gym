@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Gym Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f2f6fb;
+      color: #1f2937;
+      --surface: #ffffff;
+      --surface-muted: #f8fafc;
+      --border: #e2e8f0;
+      --primary: #2563eb;
+      --primary-strong: #1d4ed8;
+      --success: #16a34a;
+      --info: #0ea5e9;
+      --warning: #f59e0b;
+      --danger: #dc2626;
+      --radius: 16px;
+      --shadow: 0 20px 50px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; background: radial-gradient(circle at top, #eef2ff 0%, #f8fafc 45%, #f1f5f9 100%); }
+    .page { max-width: 1180px; margin: 0 auto; padding: 24px 20px 40px; }
+    header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: center; margin-bottom: 24px; }
+    header h1 { font-size: clamp(2rem, 2.6vw, 2.6rem); margin: 0; letter-spacing: -0.02em; }
+    .top-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .button, .pill { display: inline-flex; align-items: center; justify-content: center; padding: 10px 16px; border-radius: 999px; text-decoration: none; transition: transform .18s ease, box-shadow .18s ease; }
+    .button { background: var(--primary); color: white; box-shadow: 0 12px 30px rgba(37, 99, 235, 0.18); }
+    .button:hover { transform: translateY(-1px); }
+    .pill { background: var(--surface); color: #334155; border: 1px solid var(--border); }
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; }
+    .stat-card strong { display: block; margin-bottom: 10px; color: #0f172a; }
+    .section { margin-top: 22px; }
+    .section h2, .section h3 { margin: 0 0 18px; color: #0f172a; }
+    .item { margin-bottom: 14px; padding: 16px; border-radius: 14px; background: var(--surface-muted); border: 1px solid transparent; }
+    .item.hot { border-color: #fde68a; background: #fffbeb; }
+    .item.expiry { border-color: #93c5fd; background: #eff6ff; }
+    .item.expired { border-color: #fecaca; background: #fef2f2; }
+    .item strong { display: block; margin-bottom: 6px; }
+    .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .button-row a { border-radius: 12px; }
+    @media (max-width: 780px) { .stats-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <h1>Gym Management Dashboard</h1>
+        <p style="color:#64748b; margin-top:8px; max-width:720px;">Quick view of leads, membership activity, renewal reminders, attendance, and revenue performance.</p>
+      </div>
+      <div class="top-actions">
+        <a class="button" href="/add_inquiry">Add Lead</a>
+        <a class="button" href="/new_member">Register Member</a>
+        <a class="button" href="/reminders">Reminders</a>
+        <a class="button" href="/attendance">Attendance</a>
+        <a class="button" href="/payments">Payments</a>
+      </div>
+    </header>
+  <h1>Gym Management Dashboard</h1>
+  <div class="row">
+    <div class="card"><strong>Active Members</strong><div>{{ active_members }}</div></div>
+    <div class="card"><strong>Active Inquiries</strong><div>{{ total_inquiries }}</div></div>
+    <div class="card"><strong>Revenue Today</strong><div>₹{{ revenue }}</div></div>
+    <div class="card"><strong>This Month</strong><div>₹{{ month_revenue }}</div></div>
+  </div>
+
+  <div class="section">
+    <h3>Hot Inquiries (Next 7 days)</h3>
+    {% if hot_inquiries %}
+      {% for inquiry in hot_inquiries %}
+        <div class="item hot"><strong>{{ inquiry['name'] }}</strong> | {{ inquiry['plan_interest'] }} | Join {{ inquiry['expected_join_date'] }}</div>
+      {% endfor %}
+    {% else %}
+      <p>No inquiries joining this week.</p>
+    {% endif %}
+  </div>
+
+  <div class="section">
+    <h3>Expiring Soon (Next 7 days)</h3>
+    {% if expiry_soon %}
+      {% for member in expiry_soon %}
+        <div class="item expiry"><strong>{{ member['name'] }}</strong> | {{ member['plan_name'] }} | Expires {{ member['expiry_date'] }}</div>
+      {% endfor %}
+    {% else %}
+      <p>No members expiring this week.</p>
+    {% endif %}
+  </div>
+
+  <div class="section">
+    <h3>Expired Members</h3>
+    {% if expired_members %}
+      {% for member in expired_members %}
+        <div class="item expired"><strong>{{ member['name'] }}</strong> | Expired {{ member['expiry_date'] }}</div>
+      {% endfor %}
+    {% else %}
+      <p>No expired members.</p>
+    {% endif %}
+  </div>
+
+  <div class="buttons">
+    <a href="/add_inquiry">Add Inquiry</a>
+    <a href="/inquiries">All Inquiries</a>
+    <a href="/new_member">Register Member</a>
+    <a href="/members">Members</a>
+    <a href="/trainers">Trainers</a>
+    <a href="/attendance">Attendance</a>
+    <a href="/payments">Payments</a>
+    <a href="/reminders">Reminders</a>
+    <a href="/archive">Archive</a>
+  </div>
+</body>
+</html>

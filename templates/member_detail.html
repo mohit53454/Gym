@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Member Details{% endblock %}
+{% block heading %}{{ member['name'] }}{% endblock %}
+{% block description %}Member profile, payment status, trainer details, and attendance scan code.{% endblock %}
+{% block actions %}
+<a class="button" href="/renew_member/{{ member['id'] }}">Renew Plan</a>
+<a class="button" href="/record_attendance/{{ member['id'] }}">Attendance</a>
+<a class="button" href="/record_payment/{{ member['id'] }}">Payment</a>
+{% endblock %}
+{% block extra_head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">{{ member['name'] }}</div>
+  <p class="poster-sub">Member profile, code, trainer, and attendance QR presented in a hard-edged premium format.</p>
+</section>
+<div class="grid-2">
+  <section class="panel grid-2">
+    <div class="card"><strong>Member Code</strong><div class="stat-number" style="font-size:1.4rem;">{{ member['member_code'] }}</div></div>
+    <div class="card"><strong>Phone</strong><div>{{ member['phone'] }}</div></div>
+    <div class="card"><strong>Plan</strong><div>{{ member['plan_name'] }}</div></div>
+    <div class="card"><strong>Duration</strong><div>{{ member['plan_duration'] }} days</div></div>
+    <div class="card"><strong>Start Date</strong><div>{{ member['start_date'] }}</div></div>
+    <div class="card"><strong>Expiry Date</strong><div>{{ member['expiry_date'] }}</div></div>
+    <div class="card"><strong>Fee Status</strong><div>{{ member['fee_status']|title }}</div></div>
+    <div class="card"><strong>Trainer</strong><div>{{ member['trainer_name'] or 'Not assigned' }}</div></div>
+  </section>
+  <section class="panel">
+    <h3>Attendance QR</h3>
+    <p class="note">Customer-side scanner can use this code for check-in.</p>
+    <div id="member-qr" style="display:grid; place-items:center; padding:12px; background:rgba(255,106,0,0.08); border-radius:18px; border:1px solid rgba(255,132,0,0.22);"></div>
+    <p class="mini">If camera scan is not available, enter <strong>{{ member['member_code'] }}</strong> manually on the customer screen.</p>
+    {% if member['trainer_name'] %}
+    <div class="card" style="margin-top:16px;">
+      <strong>Trainer</strong>
+      <div>{{ member['trainer_name'] }}</div>
+      <div class="note">{{ member['trainer_specialty'] }} | {{ member['trainer_phone'] }}</div>
+    </div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  new QRCode(document.getElementById('member-qr'), {
+    text: '{{ member['member_code'] }}',
+    width: 220,
+    height: 220,
+    colorDark: '#e17800',
+    colorLight: '#111111'
+  });
+</script>
+{% endblock %}

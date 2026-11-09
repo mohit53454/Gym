@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Set Renewal Reminder{% endblock %}
+{% block heading %}Set Renewal Reminder{% endblock %}
+{% block description %}Schedule a follow-up for member renewal or expiry outreach.{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">Reminder strike</div>
+  <p class="poster-sub">Set the exact follow-up date with a sharp, urgent look that matches the rest of the app.</p>
+</section>
+  <div class="panel">
+    <form method="POST">
+      <label>Member<input type="text" value="{{ member['name'] }}" disabled></label>
+      <label>Reminder Date<input type="date" name="reminder_date" value="{{ today }}" required></label>
+      <label>Reminder Type<select name="reminder_type">
+          <option value="followup">Owner Follow-up</option>
+          <option value="expiry_week">Expiry Week Reminder</option>
+          <option value="expiry_1day">One-Day Reminder</option>
+        </select></label>
+      <div class="form-actions"><button class="button" type="submit">Save Reminder</button><a class="button-ghost" href="/reminders">Cancel</a></div>
+    </form>
+  </div>
+{% endblock %}

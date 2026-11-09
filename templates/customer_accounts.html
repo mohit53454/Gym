@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Customer Accounts{% endblock %}
+{% block heading %}Customer Side{% endblock %}
+{% block description %}Admin creates customer login credentials here. Those credentials can open the attendance scanner side.{% endblock %}
+{% block actions %}<a class="button" href="/customer/login">Customer Login Page</a>{% endblock %}
+{% block content %}
+<div class="grid-2">
+  <section class="panel">
+    <h3>Create Customer Credential</h3>
+    <form method="POST">
+      <label>Full Name<input type="text" name="full_name" required></label>
+      <label>Username<input type="text" name="username" required></label>
+      <label>Password<input type="password" name="password" required></label>
+      <div class="form-actions"><button class="button" type="submit">Create Access</button></div>
+    </form>
+  </section>
+  <section class="panel table-wrap">
+    <h3>Existing Customer Accounts</h3>
+    {% if customers %}
+    <table>
+      <thead><tr><th>Name</th><th>Username</th><th>Status</th><th>Created</th><th>Admin</th></tr></thead>
+      <tbody>
+        {% for customer in customers %}
+        <tr>
+          <td>{{ customer['full_name'] }}</td>
+          <td>{{ customer['username'] }}</td>
+          <td>{{ customer['status'] }}</td>
+          <td>{{ customer['created_date'] }}</td>
+          <td>{{ customer['admin_name'] or '-' }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="note">No customer accounts created yet.</p>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

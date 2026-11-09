@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Trainers{% endblock %}
+{% block heading %}Trainers{% endblock %}
+{% block description %}Manage your gym staff and assign them to members.{% endblock %}
+{% block actions %}<a class="button" href="/add_trainer">Add Trainer</a>{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">Staff lineup</div>
+  <p class="poster-sub">Your coaches belong on the same power-brand stage as the rest of the system.</p>
+</section>
+  <div class="section panel table-wrap">
+    {% if trainers %}
+      <table>
+        <thead><tr><th>Name</th><th>Phone</th><th>Specialty</th></tr></thead>
+        <tbody>
+          {% for trainer in trainers %}
+          <tr><td>{{ trainer['name'] }}</td><td>{{ trainer['phone'] }}</td><td>{{ trainer['specialty'] }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="note">No trainers added yet.</p>
+    {% endif %}
+  </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Inquiries{% endblock %}
+{% block heading %}Leads{% endblock %}
+{% block description %}Track leads and convert them into members quickly.{% endblock %}
+{% block actions %}<a class="button" href="/add_inquiry">Add Inquiry</a>{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">Lead control</div>
+  <p class="poster-sub">Every prospect should feel like a high-value lead in the gym pipeline.</p>
+</section>
+  <div class="panel table-wrap">
+    {% if inquiries %}
+      <table>
+        <thead>
+          <tr><th>Name</th><th>Phone</th><th>Plan</th><th>Expected Join</th><th>Status</th><th>Action</th></tr>
+        </thead>
+        <tbody>
+          {% for inquiry in inquiries %}
+          <tr>
+            <td>{{ inquiry['name'] }}</td>
+            <td>{{ inquiry['phone'] }}</td>
+            <td>{{ inquiry['plan_interest'] }}</td>
+            <td>{{ inquiry['expected_join_date'] }}</td>
+            <td>{{ inquiry['status'] }}</td>
+            <td>
+              <form method="POST" action="/convert_inquiry/{{ inquiry['id'] }}">
+                <input type="hidden" name="plan_duration" value="30">
+                <button class="button-small" type="submit">Convert</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="note">No active inquiries found.</p>
+    {% endif %}
+  </div>
+{% endblock %}

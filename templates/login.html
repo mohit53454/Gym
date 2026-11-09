@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Admin Login{% endblock %}
+{% block auth_content %}
+<div class="auth-shell">
+  <div class="panel auth-card" style="display:grid; gap:14px; background:linear-gradient(180deg, rgba(255,106,0,0.06), rgba(10,10,10,0.98));">
+    <div class="card" style="background:linear-gradient(145deg, rgba(255,106,0,0.38), rgba(10,10,10,0.96)); border-color:rgba(255,132,0,0.48);">
+      <span class="brand-tag">Admin Access</span>
+      <h1 class="display-title" style="font-size:3.9rem; margin-top:8px; margin-bottom:8px; line-height:0.95;">POWER GYM</h1>
+      <p class="poster-sub" style="margin:0; max-width: 32rem;">Discipline. Progress. Accountability.</p>
+      <p class="hero-details" style="margin-top:12px;">Every rep counts. Every check-in matters.</p>
+    </div>
+    <div class="card">
+      <p class="note">Default admin login: <strong>admin</strong> / <strong>admin123</strong></p>
+      <form method="POST">
+        <label>Username<input type="text" name="username" required></label>
+        <label>Password<input type="password" name="password" required></label>
+        <div class="form-actions">
+          <button class="button" type="submit">Login as Admin</button>
+          <a class="button-ghost" href="/customer/login">Customer Side</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

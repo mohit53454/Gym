@@ -1,0 +1,57 @@
+﻿{% extends "base.html" %}
+{% block title %}Reminders{% endblock %}
+{% block heading %}Reminders{% endblock %}
+{% block description %}Send today's reminders or schedule follow-ups for members due soon.{% endblock %}
+{% block actions %}<a class="button" href="/members">View Members</a>{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">Renewal pressure</div>
+  <p class="poster-sub">This screen should feel urgent and premium. It drives renewals with a hard orange warning presence.</p>
+</section>
+  <div class="section panel">
+    <h3>Expiry This Week</h3>
+    <div class="form-actions">
+      <a class="button-small" href="/auto_schedule/expiry_week">Auto-schedule Week</a>
+    </div>
+    {% if expiry_this_week %}
+      {% for member in expiry_this_week %}
+        <div class="card item expiry" style="margin-top:12px;"><strong>{{ member['name'] }}</strong><br><span class="note">{{ member['plan_name'] }} - Expires {{ member['expiry_date'] }}</span><br><a class="button-small" href="/whatsapp/{{ member['id'] }}/expiry_week">WhatsApp</a><a class="button-small" href="/set_renewal/{{ member['id'] }}">Reminder</a></div>
+      {% endfor %}
+    {% else %}
+      <p class="note">No members expiring this week.</p>
+    {% endif %}
+  </div>
+  <div class="section panel">
+    <h3>Expiry Tomorrow</h3>
+    <div class="form-actions">
+      <a class="button-small" href="/auto_schedule/expiry_1day">Auto-schedule Tomorrow</a>
+    </div>
+    {% if expiry_tomorrow %}
+      {% for member in expiry_tomorrow %}
+        <div class="card item expiry" style="margin-top:12px;"><strong>{{ member['name'] }}</strong><br><span class="note">{{ member['plan_name'] }} - Expires {{ member['expiry_date'] }}</span><br><a class="button-small" href="/whatsapp/{{ member['id'] }}/expiry_1day">WhatsApp</a><a class="button-small" href="/set_renewal/{{ member['id'] }}">Reminder</a></div>
+      {% endfor %}
+    {% else %}
+      <p class="note">No members expiring tomorrow.</p>
+    {% endif %}
+  </div>
+  <div class="section panel">
+    <h3>Today's Scheduled Reminders</h3>
+    {% if scheduled_reminders_today %}
+      {% for reminder in scheduled_reminders_today %}
+        <div class="card item" style="margin-top:12px;"><strong>{{ reminder['name'] }}</strong><br><span class="note">{{ reminder['reminder_date'] }} - {{ reminder['reminder_type'] }}</span><br><a class="button-small" href="/whatsapp/{{ reminder['member_id'] }}/{{ reminder['reminder_type'] }}">WhatsApp</a><a class="button-small" href="/mark_reminder_sent/{{ reminder['id'] }}">Mark Sent</a><a class="button-small" href="/delete_reminder/{{ reminder['id'] }}">Delete</a></div>
+      {% endfor %}
+    {% else %}
+      <p class="note">No reminders scheduled for today.</p>
+    {% endif %}
+  </div>
+  <div class="section panel">
+    <h3>Upcoming Scheduled Reminders</h3>
+    {% if scheduled_reminders_future %}
+      {% for reminder in scheduled_reminders_future %}
+        <div class="card item" style="margin-top:12px;"><strong>{{ reminder['name'] }}</strong><br><span class="note">{{ reminder['reminder_date'] }} - {{ reminder['reminder_type'] }}</span><br><a class="button-small" href="/whatsapp/{{ reminder['member_id'] }}/{{ reminder['reminder_type'] }}">WhatsApp</a><a class="button-small" href="/mark_reminder_sent/{{ reminder['id'] }}">Mark Sent</a><a class="button-small" href="/delete_reminder/{{ reminder['id'] }}">Delete</a></div>
+      {% endfor %}
+    {% else %}
+      <p class="note">No upcoming reminders scheduled.</p>
+    {% endif %}
+  </div>
+{% endblock %}

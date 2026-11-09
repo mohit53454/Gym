@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Local databases and journals (SQLite, test/dev data)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+*.sqlite3-journal
+
+# Test/scratch artifacts
+write_test.txt
+
+# Logs and tooling
+*.log
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
+
+# Editors/OS
+.git
+.DS_Store
+.vscode/
+*.swp
+*.swo
+*~

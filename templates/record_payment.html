@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Record Payment{% endblock %}
+{% block heading %}Record Payment{% endblock %}
+{% block description %}Log a payment for the member and update revenue totals.{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">Payment capture</div>
+  <p class="poster-sub">A high-contrast payment form designed to match the rest of the gym brand system.</p>
+</section>
+  <div class="panel">
+    <form method="POST">
+      <label>Member<input type="text" value="{{ member['name'] }}" disabled></label>
+      <label>Payment Date<input type="date" name="payment_date" value="{{ today }}" required></label>
+      <label>Amount<input type="number" name="amount" min="0" required></label>
+      <label>Payment Type<select name="payment_type"><option value="membership">Membership</option><option value="renewal">Renewal</option><option value="other">Other</option></select></label>
+      <div class="form-actions"><button class="button" type="submit">Save Payment</button><a class="button-ghost" href="/payments">Cancel</a></div>
+    </form>
+  </div>
+{% endblock %}

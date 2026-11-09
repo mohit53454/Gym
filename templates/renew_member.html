@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Renew Member{% endblock %}
+{% block heading %}Renew Membership{% endblock %}
+{% block description %}Update the member's plan and extend their gym access.{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">Renewal lift</div>
+  <p class="poster-sub">Push the membership forward with the same high-energy orange brand language.</p>
+</section>
+  <div class="panel">
+    <form method="POST">
+      <label>Plan<select name="plan_name" required>
+          <option value="Basic (1 month)">Basic (1 month)</option>
+          <option value="Premium (3 months)">Premium (3 months)</option>
+          <option value="Elite (6 months)">Elite (6 months)</option>
+          <option value="Annual">Annual</option>
+        </select></label>
+      <label>Start Date<input type="date" name="start_date" required value="{{ member['start_date'] }}"></label>
+      <label>Fee Status<select name="fee_status"><option value="paid">Paid</option><option value="pending">Pending</option></select></label>
+      <div class="form-actions"><button class="button" type="submit">Renew</button><a class="button-ghost" href="/member/{{ member['id'] }}">Cancel</a></div>
+    </form>
+  </div>
+{% endblock %}

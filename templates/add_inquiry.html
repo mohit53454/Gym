@@ -1,0 +1,46 @@
+
+
+
+
+
+{% extends "base.html" %}
+{% block title %}Add Inquiry or Member{% endblock %}
+{% block heading %}Add Inquiry or New Member{% endblock %}
+{% block description %}Capture a lead or register a direct member with the same form.{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">Lead entry</div>
+  <p class="poster-sub">Use one intense form for both leads and direct sign-ups, with the same premium orange identity.</p>
+</section>
+  <div class="panel">
+    <form method="POST">
+      <div class="field-row">
+        <label>Name<input type="text" name="name" required></label>
+        <label>Phone<input type="tel" name="phone" required></label>
+      </div>
+      <label>Plan Interested In
+        <select name="plan" required>
+          <option value="">Select Plan</option>
+          <option value="Basic (1 month)">Basic (1 month)</option>
+          <option value="Premium (3 months)">Premium (3 months)</option>
+          <option value="Elite (6 months)">Elite (6 months)</option>
+          <option value="Annual">Annual</option>
+        </select>
+      </label>
+      <label>Type
+        <select name="join_type" id="join_type" onchange="updateForm()" required>
+          <option value="inquiry">Inquiry (Not joining now)</option>
+          <option value="direct">Direct Member (Joining now)</option>
+        </select>
+      </label>
+      <label>Joining Date<input type="date" name="join_date" required></label>
+      <div id="duration-group" style="display:none;"><label>Plan Duration (days)<input type="number" name="plan_duration" min="1" value="30"></label></div>
+      <div class="form-actions"><button class="button" type="submit">Save</button><a class="button-ghost" href="/">Cancel</a></div>
+    </form>
+  </div>
+  <script>
+    function updateForm() {
+      document.getElementById('duration-group').style.display = document.getElementById('join_type').value === 'direct' ? 'block' : 'none';
+    }
+  </script>
+{% endblock %}

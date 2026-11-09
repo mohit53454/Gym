@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Archive{% endblock %}
+{% block heading %}Archive{% endblock %}
+{% block description %}Review expired members and converted inquiries.{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">History vault</div>
+  <p class="poster-sub">Archived records keep the brand tone while holding older members and converted leads.</p>
+</section>
+  <div class="section panel">
+    <h3>Expired Members</h3>
+    {% if expired_members %}
+      <div class="table-wrap"><table><thead><tr><th>Name</th><th>Phone</th><th>Plan</th><th>Expiry</th></tr></thead><tbody>{% for member in expired_members %}<tr><td>{{ member['name'] }}</td><td>{{ member['phone'] }}</td><td>{{ member['plan_name'] }}</td><td>{{ member['expiry_date'] }}</td></tr>{% endfor %}</tbody></table></div>
+    {% else %}
+      <p class="note">No expired members in archive.</p>
+    {% endif %}
+  </div>
+  <div class="section panel">
+    <h3>Converted Inquiries</h3>
+    {% if converted_inquiries %}
+      <div class="table-wrap"><table><thead><tr><th>Name</th><th>Phone</th><th>Plan</th><th>Created</th></tr></thead><tbody>{% for inquiry in converted_inquiries %}<tr><td>{{ inquiry['name'] }}</td><td>{{ inquiry['phone'] }}</td><td>{{ inquiry['plan_interest'] }}</td><td>{{ inquiry['created_date'] }}</td></tr>{% endfor %}</tbody></table></div>
+    {% else %}
+      <p class="note">No converted inquiries yet.</p>
+    {% endif %}
+  </div>
+{% endblock %}

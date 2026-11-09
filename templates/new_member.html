@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Register New Member{% endblock %}
+{% block heading %}Register New Member{% endblock %}
+{% block description %}Add a member and assign a trainer if needed.{% endblock %}
+{% block content %}
+<section class="panel" style="margin-bottom:20px; background:linear-gradient(135deg, rgba(255,106,0,0.22), rgba(10,10,10,0.98));">
+  <div class="poster-headline">Create a member</div>
+  <p class="poster-sub">This registration screen should feel like a power entry form, not a bland admin input page.</p>
+</section>
+  <div class="panel">
+    <form method="POST">
+      <label>Name<input type="text" name="name" required></label>
+      <label>Phone<input type="tel" name="phone" required></label>
+      <label>Plan<select name="plan_name" required>
+          <option value="">Select Plan</option>
+          <option value="Basic (1 month)">Basic (1 month)</option>
+          <option value="Premium (3 months)">Premium (3 months)</option>
+          <option value="Elite (6 months)">Elite (6 months)</option>
+          <option value="Annual">Annual</option>
+        </select></label>
+      <label>Start Date<input type="date" name="start_date" required></label>
+      <label>Trainer<select name="trainer_id"><option value="">No trainer</option>{% for trainer in trainers %}<option value="{{ trainer['id'] }}">{{ trainer['name'] }}</option>{% endfor %}</select></label>
+      <label>Fee Status<select name="fee_status"><option value="paid">Paid</option><option value="pending">Pending</option></select></label>
+      <div class="form-actions"><button class="button" type="submit">Register Member</button><a class="button-ghost" href="/members">Back</a></div>
+    </form>
+  </div>
+{% endblock %}
